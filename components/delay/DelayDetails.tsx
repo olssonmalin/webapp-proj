@@ -1,9 +1,9 @@
-import { Text, View, ScrollView } from "react-native";
+import { Text, View } from "react-native";
 import delayModel from "../../models/delays";
 import DelayMap from "./DelayMap";
 import { Base, Typography } from "../../styles";
 
-export default function DelayDetails({ route, navigation, stationInfo }) {
+export default function DelayDetails({ route, stationInfo }) {
 
     const { delay } = route.params;
 

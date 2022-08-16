@@ -1,7 +1,6 @@
 import { Pressable, Text, View, ActivityIndicator } from "react-native";
 import { useEffect, useState } from "react";
 import delayModel from "../../models/delays";
-
 import messageModel from "../../models/messages";
 import DelayList from "../delay/DelayList";
 import { Base, Buttons, Typography } from "../../styles";

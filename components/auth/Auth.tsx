@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { View } from "react-native";
 import { Base } from "../../styles";
-import AuthForm from "./AuthForm";
 import Login from "./Login";
 import Register from "./Register";
 

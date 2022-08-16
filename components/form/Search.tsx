@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 import searchModel from "../../models/search";
 import { Base, Typography } from "../../styles";
 import { EvilIcons } from '@expo/vector-icons';
@@ -16,7 +16,6 @@ export default function Search({ title, setResult, placeholder }) {
                     onChangeText(text);
                     if (title === "Stationer") {
                         setResult(await searchModel.getSearchResultStation(text));
-                        // console.log(await searchModel.getSearchResultStation(text));
                     } else if (title === "Förseningar") {
                         setResult(await searchModel.getSearchResult(text));
                     }

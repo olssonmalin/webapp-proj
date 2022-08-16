@@ -1,14 +1,51 @@
-import { Text, View, ScrollView, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import MapView from 'react-native-maps';
 import { Marker, Callout } from 'react-native-maps';
-import DelayToggle from "./DelayToggle";
+import * as Location from 'expo-location';
 import delayModel from "../../models/delays";
-import { useEffect, useState, useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Base, Buttons, Typography } from "../../styles";
 
 export default function DelayMapAll({ navigation, stationInfo, delays }) {
 
     const mapRef = useRef(null);
+    const [locationMarker, setLocationMarker] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            const { status } = await Location.requestForegroundPermissionsAsync();
+
+            if (status !== 'granted') {
+                setErrorMessage('Permission to access location was denied');
+                return;
+            }
+
+            const currentLocation = await Location.getCurrentPositionAsync({});
+
+            setLocationMarker(<Marker
+                coordinate={{
+                    latitude: currentLocation.coords.latitude,
+                    longitude: currentLocation.coords.longitude
+                }}
+                title="Min plats"
+                image={require('../../img/marker/user-location.png')}
+            >
+
+                <Callout
+                    tooltip={true}
+                >
+                    <View style={Buttons.calloutContainer}>
+                        <View style={Buttons.calloutView}>
+                            <Text style={[Typography.normal, Typography.calloutStation]}>Min Plats</Text>
+                        </View>
+                        <View style={Buttons.calloutTriangle} />
+                    </View>
+                </Callout>
+            </Marker>
+            );
+        })();
+    }, []);
 
     const markers = delays.map((delay, index) => {
         const signature = delay.FromLocation[0].LocationName;
@@ -65,12 +102,13 @@ export default function DelayMapAll({ navigation, stationInfo, delays }) {
                     mapRef.current.animateToRegion({
                         latitude: e.nativeEvent.coordinate.latitude,
                         longitude: e.nativeEvent.coordinate.longitude,
-                        latitudeDelta: 5,
-                        longitudeDelta: 5,
+                        latitudeDelta: 0.1,
+                        longitudeDelta: 0.1,
                     }, 500)
                 }}
             >
                 {markers}
+                {locationMarker}
             </MapView>
         </View>
     )

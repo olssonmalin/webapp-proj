@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Modal, StyleSheet, Text, Pressable, View, Alert } from "react-native";
+import { Modal, Text, Pressable, View, Alert } from "react-native";
 import AuthForm from "./AuthForm";
 import Auth from "../../interfaces/auth";
 import AuthModel from "../../models/auth";
-import userModel from "../../models/user";
 
 import { Base, Typography, Buttons } from "../../styles";
 

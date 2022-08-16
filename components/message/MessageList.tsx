@@ -1,11 +1,9 @@
-import messageModel from "../../models/messages";
-import { Text, View, Modal, Pressable, Alert, StyleSheet, ScrollView } from "react-native";
-import { DataTable } from 'react-native-paper';
+import { Text, View, Modal, Pressable, Alert, ScrollView } from "react-native";
 import { useState } from "react";
 
 import { Base, Typography, Buttons } from "../../styles";
 
-export default function MessageList({ messages, navigation, route }) {
+export default function MessageList({ messages }) {
     const [modalVisible, setModalVisible] = useState(false);
 
     const listOfMessages = messages.map((message, index) => {

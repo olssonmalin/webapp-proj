@@ -92,8 +92,6 @@ export default function App() {
                 setDelays={setDelays}
                 stationInfo={stationInfo}
                 setStationInfo={setStationInfo}
-                messages={messages}
-                setMessages={setMessages}
               />
             }
           </Tab.Screen>

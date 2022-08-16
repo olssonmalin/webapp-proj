@@ -1,6 +1,5 @@
-import { ScrollView, TouchableHighlight, Text, FlatList, View } from "react-native";
-import { DataTable } from 'react-native-paper';
-import { Base, Typography, Buttons } from "../../styles";
+import { TouchableHighlight, Text, View } from "react-native";
+import { Base, Typography } from "../../styles";
 import SwipeableRow from "../user/SwipableRow";
 
 export default function ListItemLoggedIn({ navigation, station, addToFavorite }) {

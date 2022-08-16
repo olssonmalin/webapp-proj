@@ -1,7 +1,6 @@
 
-import { View, Text, Button, ScrollView, TouchableHighlight, FlatList } from "react-native";
-import { DataTable } from 'react-native-paper';
-import { Base, Typography, Buttons } from "../../styles";
+import { Text, TouchableHighlight } from "react-native";
+import { Base, Typography } from "../../styles";
 
 
 export default function ListItem({ navigation, station }) {

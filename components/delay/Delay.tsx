@@ -1,9 +1,5 @@
-import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
 import DelayList from "./DelayList";
 import DelayDetails from "./DelayDetails";
-import DelayMapAll from "./DelayMapAll";
-import { Base, Typography } from "../../styles";
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -45,7 +41,7 @@ export default function Delay(props) {
                     },
                 })}
             >
-                {(screenProps) => <DelayDetails {...screenProps} names={props.names} messages={props.messages} setMessages={props.setMessages} stationInfo={props.stationInfo} />}
+                {(screenProps) => <DelayDetails {...screenProps} stationInfo={props.stationInfo} />}
             </Stack.Screen>
         </Stack.Navigator>
     )

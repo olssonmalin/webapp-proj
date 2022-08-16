@@ -63,7 +63,7 @@ export default function Station(props) {
                     },
                 })}
             >
-                {(screenProps) => <DelayDetails {...screenProps} stationInfo={props.stationInfo} messages={props.messages} setMessages={props.setMessages} />}
+                {(screenProps) => <DelayDetails {...screenProps} stationInfo={props.stationInfo} />}
             </Stack.Screen>
             <Stack.Screen
                 name="Meddelande"

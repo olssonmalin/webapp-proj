@@ -1,7 +1,6 @@
-import { Text, View, ScrollView, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import MapView, { Marker, Circle } from 'react-native-maps';
-import delayModel from "../../models/delays";
-import { Base, Typography } from "../../styles";
+import { Base } from "../../styles";
 
 export default function DelayMap({ stationInfo, radiusMeter }) {
 

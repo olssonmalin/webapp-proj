@@ -35,18 +35,6 @@ export default function DelayList({ navigation, delays, stationInfo, setStationI
         }
     }, []);
 
-    // const [refreshing, setRefreshing] = useState(false);
-
-    // async function onRefresh() {
-    //     setRefreshing(true);
-    //     if (station === "") {
-    //         await fetchDataAll();
-    //     } else {
-    //         await fetchDataStation();
-    //     }
-    //     setRefreshing(false);
-    // }
-
     const header = () => {
         return (
             <DataTable.Header style={Base.headerDelays}>

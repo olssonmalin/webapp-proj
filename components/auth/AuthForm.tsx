@@ -1,5 +1,4 @@
 import { View, Text, TextInput, Pressable, Alert } from "react-native";
-import { useState } from "react";
 import { Buttons, Typography, Base } from "../../styles";
 
 export default function AuthForm({ title, auth, setAuth, submit }) {
