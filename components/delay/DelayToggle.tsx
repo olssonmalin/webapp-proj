@@ -2,7 +2,12 @@ import { View, Text } from "react-native";
 import { Base, Typography } from "../../styles";
 import Toggle from "react-native-toggle-element";
 
-export default function DelayToggle({ showMap, setShowMap }) {
+interface Props {
+    showMap: boolean,
+    setShowMap: Function
+}
+
+export default function DelayToggle({ showMap, setShowMap }: Props) {
 
     return (
         <View style={Base.toggleView}>

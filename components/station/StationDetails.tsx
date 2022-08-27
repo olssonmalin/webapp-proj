@@ -5,11 +5,26 @@ import messageModel from "../../models/messages";
 import DelayList from "../delay/DelayList";
 import { Base, Buttons, Typography } from "../../styles";
 import { Feather } from '@expo/vector-icons';
+import StationInterface from "../../interfaces/station";
+import MessageInterface from "../../interfaces/message";
+import StationInfo from "../../interfaces/stationInfo";
+import DelayInterface from "../../interfaces/delay";
 
-export default function StationDetails({ route, navigation, messages, setMessages, stationInfo, setStationInfo }) {
+interface Props {
+    route: any,
+    navigation: any,
+    messages: MessageInterface[],
+    setMessages: Function,
+    stationInfo: {
+        [key: string]: StationInfo
+    },
+    setStationInfo: Function
+}
 
-    const { station } = route.params;
-    const [delaysStation, setDelaysStation] = useState<any[]>([]);
+export default function StationDetails({ route, navigation, messages, setMessages, stationInfo, setStationInfo }: Props) {
+
+    const { station }: { station: StationInterface } = route.params;
+    const [delaysStation, setDelaysStation] = useState<DelayInterface[]>([]);
     const [IsLoading, setIsLoading] = useState<Boolean>(true);
 
 
@@ -49,9 +64,9 @@ export default function StationDetails({ route, navigation, messages, setMessage
                 {messages.length > 0 &&
                     <Pressable style={Buttons.messages} onPress={() => { navigation.navigate("Meddelande") }}>
                         <View style={Buttons.messagesTextContainer}>
-                            <Text style={[Typography.message]}>Meddelanden</Text>
-                            <View style={[Typography.messageNumberView]}>
-                                <Text style={[Typography.messageNumber]}>{messages.length}</Text>
+                            <Text style={Typography.message}>Meddelanden</Text>
+                            <View style={Typography.messageNumberView}>
+                                <Text style={Typography.messageNumber}>{messages.length}</Text>
                             </View>
                         </View>
                         <Feather style={Typography.messageIcon} name="chevron-right" size={20} color="black" />

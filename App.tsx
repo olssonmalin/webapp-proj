@@ -15,6 +15,12 @@ import User from './components/user/User';
 
 import authModel from './models/auth';
 
+import DelayInterface from './interfaces/delay';
+import StationInfo from './interfaces/stationInfo';
+import StationInterface from './interfaces/station';
+import MessageInterface from './interfaces/message';
+import FavoriteInterface from './interfaces/favorite';
+
 
 const Tab = createBottomTabNavigator();
 const routeIcons = {
@@ -24,12 +30,12 @@ const routeIcons = {
 };
 
 export default function App() {
-  const [stations, setStations] = useState<any[]>([]);
-  const [delays, setDelays] = useState<any[]>([]);
-  const [messages, setMessages] = useState<any[]>([]);
-  const [stationInfo, setStationInfo] = useState<any[]>([]);
+  const [stations, setStations] = useState<Partial<StationInterface>[]>([]);
+  const [delays, setDelays] = useState<Partial<DelayInterface>[]>([]);
+  const [messages, setMessages] = useState<Partial<MessageInterface>[]>([]);
+  const [stationInfo, setStationInfo] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
-  const [favorites, setFavorites] = useState<any[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteInterface[]>([]);
   const [appIsReady, setAppIsReady] = useState<Boolean>(false);
 
 
@@ -37,7 +43,6 @@ export default function App() {
     async function loggedIn() {
       setIsLoggedIn(await authModel.loggedIn());
       setAppIsReady(true);
-
     }
 
     loggedIn();

@@ -4,7 +4,13 @@ import searchModel from "../../models/search";
 import { Base, Typography } from "../../styles";
 import { EvilIcons } from '@expo/vector-icons';
 
-export default function Search({ title, setResult, placeholder }) {
+interface Props {
+    title: string,
+    setResult: Function,
+    placeholder: string
+}
+
+export default function Search({ title, setResult, placeholder }: Props) {
     const [text, onChangeText] = useState("");
 
 

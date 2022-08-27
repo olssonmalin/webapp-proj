@@ -8,9 +8,20 @@ import userModel from "../../models/user";
 import ListItem from "./ListItem";
 import ListItemLoggedIn from "./ListItemLoggedIn";
 import ListItemFavorite from "../user/ListItemFavorite";
+import FavoriteInterface from "../../interfaces/favorite";
+import StationInterface from "../../interfaces/station";
 
+interface Props {
+    stations: StationInterface[],
+    setStations: Function,
+    navigation: any,
+    isLoggedIn: boolean,
+    setIsLoggedIn: Function,
+    favorites: FavoriteInterface[],
+    setFavorites: Function
+}
 
-export default function StationList({ stations, setStations, navigation, isLoggedIn, setIsLoggedIn, favorites, setFavorites }) {
+export default function StationList({ stations, setStations, navigation, isLoggedIn, setIsLoggedIn, favorites, setFavorites }: Props) {
 
     async function fetchData() {
         const responseStations = await stationModel.getStations();
@@ -21,17 +32,18 @@ export default function StationList({ stations, setStations, navigation, isLogge
         const responseFavorites = await userModel.getData();
         setFavorites(responseFavorites);
         const responseStations = await stationModel.getStations();
-        const favoriteStations = responseFavorites.map(data => JSON.parse(data.artefact));
+        const favoriteStations = responseFavorites.map(data => data.artefact);
+        // const diff = userModel.filterFavorites(responseStations, favoriteStations);
         const diff = userModel.filterFavorites(responseStations, favoriteStations);
         setStations(diff);
     }
 
-    async function addToFavorite(station) {
+    async function addToFavorite(station: StationInterface) {
         await userModel.addData(station);
         fetchDataLoggedIn();
     }
 
-    async function removeFavorite(id) {
+    async function removeFavorite(id: number) {
         await userModel.removeData(id);
         fetchDataLoggedIn();
     }
@@ -44,19 +56,19 @@ export default function StationList({ stations, setStations, navigation, isLogge
     }, []);
 
 
-    const renderItemLoggedIn = ({ item }) => (
+    const renderItemLoggedIn = ({ item }: { item: StationInterface }) => (
         <ListItemLoggedIn station={item} navigation={navigation} addToFavorite={addToFavorite} />
     );
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({ item }: { item: StationInterface }) => (
         <ListItem station={item} navigation={navigation} />
     );
 
-    const renderItemFavorite = ({ item }) => (
+    const renderItemFavorite = ({ item }: { item: FavoriteInterface }) => (
         <ListItemFavorite data={item} navigation={navigation} removeFavorite={removeFavorite} />
     );
 
-    const renderAuth = ({ item }) => (
+    const renderAuth = ({ item }: { item: string }) => (
         <View>
             <View style={Base.pressableRow}>
                 <Text style={Typography.normal}>{item}</Text>
@@ -65,18 +77,46 @@ export default function StationList({ stations, setStations, navigation, isLogge
         </View>
     );
 
-    const DATA = [
-        {
-            title: "Favoriter",
-            renderItem: isLoggedIn ? renderItemFavorite : renderAuth,
-            data: isLoggedIn ? favorites : ["Logga in för att lägga till favoriter"],
-        },
-        {
-            title: "Stationer",
-            renderItem: isLoggedIn ? renderItemLoggedIn : renderItem,
-            data: stations,
-        }
-    ]
+    // const DATA = [
+    //     {
+    //         title: "Favoriter",
+    //         renderItem: isLoggedIn ? renderItemFavorite : renderAuth,
+    //         data: isLoggedIn ? favorites : ["Logga in för att lägga till favoriter"],
+    //     },
+    //     {
+    //         title: "Stationer",
+    //         renderItem: isLoggedIn ? renderItemLoggedIn : renderItem,
+    //         data: stations,
+    //     }
+    // ]
+    let DATA;
+    {
+        isLoggedIn ?
+            DATA = [
+                {
+                    title: "Favoriter",
+                    renderItem: renderItemFavorite,
+                    data: favorites,
+                },
+                {
+                    title: "Stationer",
+                    renderItem: renderItemLoggedIn,
+                    data: stations,
+                }
+            ] :
+            DATA = [
+                {
+                    title: "Favoriter",
+                    renderItem: renderAuth,
+                    data: ["Logga in för att lägga till favoriter"],
+                },
+                {
+                    title: "Stationer",
+                    renderItem: renderItem,
+                    data: stations,
+                }
+            ]
+    }
 
     return (
         <View style={Base.base}>
@@ -87,7 +127,7 @@ export default function StationList({ stations, setStations, navigation, isLogge
             }
             <SectionList
                 sections={DATA}
-                keyExtractor={(item, index) => item + index}
+                // keyExtractor={(item, index) => item + index}
                 renderItem={({ section: { renderItem } }) => <View>{renderItem}</View>}
                 renderSectionHeader={({ section }) => (
                     <View style={Base.base}>

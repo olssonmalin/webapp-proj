@@ -1,8 +1,14 @@
 import { View, StyleSheet } from "react-native";
 import MapView, { Marker, Circle } from 'react-native-maps';
 import { Base } from "../../styles";
+import StationInfo from "../../interfaces/stationInfo";
 
-export default function DelayMap({ stationInfo, radiusMeter }) {
+interface Props {
+    stationInfo: StationInfo,
+    radiusMeter: number
+}
+
+export default function DelayMap({ stationInfo, radiusMeter }: Props) {
 
 
     return (

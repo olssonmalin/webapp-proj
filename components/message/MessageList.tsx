@@ -1,46 +1,15 @@
-import { Text, View, Modal, Pressable, Alert, ScrollView } from "react-native";
-import { useState } from "react";
+import { ScrollView } from "react-native";
+import MessageModal from "./MessageModal";
 
-import { Base, Typography, Buttons } from "../../styles";
+import { Base } from "../../styles";
+import MessageInterface from "../../interfaces/message";
 
-export default function MessageList({ messages }) {
-    const [modalVisible, setModalVisible] = useState(false);
+export default function MessageList({ messages }: { messages: MessageInterface[] }) {
 
     const listOfMessages = messages.map((message, index) => {
 
         return (
-            <View
-                key={index}
-                style={Base.centeredView}
-            >
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        Alert.alert("Modal has been closed.");
-                        setModalVisible(!modalVisible);
-                    }}
-                >
-                    <View style={Base.centeredView}>
-                        <View style={Base.messageModal}>
-                            <Text style={Typography.normal}>{message.ExternalDescription}</Text>
-                            <Pressable
-                                style={Buttons.modalOpenGreen}
-                                onPress={() => setModalVisible(!modalVisible)}
-                            >
-                                <Text style={Typography.button}>Dölj meddelande</Text>
-                            </Pressable>
-                        </View>
-                    </View>
-                </Modal>
-                <Pressable
-                    style={Buttons.modalOpenDark}
-                    onPress={() => setModalVisible(true)}
-                >
-                    <Text style={Typography.label}>{message.Header}</Text>
-                </Pressable>
-            </View>
+            <MessageModal key={index} message={message} />
         )
     })
 

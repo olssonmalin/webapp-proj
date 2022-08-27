@@ -33,7 +33,6 @@ export default function Station(props) {
                     favorites={props.favorites}
                     setFavorites={props.setFavorites}
                     setStations={props.setStations} />,
-                // title: route.params.name,
                 headerBackTitleVisible: false,
                 headerStyle: {
                     backgroundColor: '#000'

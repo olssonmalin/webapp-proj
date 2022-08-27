@@ -8,9 +8,17 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { RectButton } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import StationInterface from "../../interfaces/station";
 
+interface Props {
+    action: Function,
+    id: number | StationInterface,
+    styling: {},
+    text: string,
+    children: any,
+}
 
-export default function SwipeableRow({ action, id, styling, text, children }) {
+export default function SwipeableRow({ action, id, styling, text, children }: Props) {
 
     const swipeableRef = useRef(null);
 

@@ -3,7 +3,13 @@ import { Base } from "../../styles";
 import Login from "./Login";
 import Register from "./Register";
 
-export default function Auth({ title, setIsLoggedIn, buttonStyle }) {
+interface Props {
+    title: string,
+    setIsLoggedIn: Function,
+    buttonStyle: {}
+}
+
+export default function Auth({ title, setIsLoggedIn, buttonStyle }: Props) {
     return (
         <View style={Base.authContainer}>
             <Login setIsLoggedIn={setIsLoggedIn} buttonStyle={buttonStyle} />

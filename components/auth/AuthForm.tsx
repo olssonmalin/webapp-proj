@@ -1,9 +1,17 @@
 import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import { Buttons, Typography, Base } from "../../styles";
+import Auth from "../../interfaces/auth";
 
-export default function AuthForm({ title, auth, setAuth, submit }) {
+interface Props {
+    title: string,
+    auth: Partial<Auth>,
+    setAuth: Function,
+    submit: Function
+}
 
-    const createTwoButtonAlert = (message, description) =>
+export default function AuthForm({ title, auth, setAuth, submit }: Props) {
+
+    const createTwoButtonAlert = (message: string, description: string) =>
         Alert.alert(
             message,
             description,
@@ -72,11 +80,17 @@ export default function AuthForm({ title, auth, setAuth, submit }) {
                 style={Buttons.logIn}
                 onPress={() => {
                     if (title === "Registrera") {
-                        const passwordValid = validatePassword(auth.password);
-                        const emailValid = validateEmail(auth.email);
+                        if (auth.password && auth.email) {
+                            const passwordValid = validatePassword(auth.password);
+                            const emailValid = validateEmail(auth.email);
 
-                        if (passwordValid && emailValid) {
-                            submit();
+                            if (passwordValid && emailValid) {
+                                submit();
+                            }
+                        } else {
+                            const message = "Icke ifyllt";
+                            const description = "Skriv in både email och lösenord";
+                            createTwoButtonAlert(message, description);
                         }
                     } else {
                         submit();

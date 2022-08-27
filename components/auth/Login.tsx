@@ -6,8 +6,12 @@ import AuthModel from "../../models/auth";
 
 import { Base, Typography, Buttons } from "../../styles";
 
+interface Props {
+    setIsLoggedIn: Function,
+    buttonStyle: {}
+}
 
-export default function Login({ setIsLoggedIn, buttonStyle }) {
+export default function Login({ setIsLoggedIn, buttonStyle }: Props) {
     const [modalVisible, setModalVisible] = useState(false);
     const [auth, setAuth] = useState<Partial<Auth>>({});
 

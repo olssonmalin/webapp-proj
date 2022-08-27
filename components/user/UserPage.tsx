@@ -1,12 +1,20 @@
 import Auth from "../auth/Auth";
 import FavoritesList from "./FavoritesList";
-import { Button, View, Pressable, Text } from "react-native";
+import { View, Pressable, Text } from "react-native";
 import { Typography, Base, Buttons } from "../../styles";
 import authModel from "../../models/auth";
-import userModel from "../../models/user";
+import FavoriteInterface from "../../interfaces/favorite";
 
+interface Props {
+    navigation: any,
+    favorites: FavoriteInterface[],
+    setFavorites: Function,
+    setStations: Function,
+    isLoggedIn: boolean,
+    setIsLoggedIn: Function
+}
 
-export default function UserPage({ navigation, favorites, setFavorites, setStations, isLoggedIn, setIsLoggedIn }) {
+export default function UserPage({ navigation, favorites, setFavorites, setStations, isLoggedIn, setIsLoggedIn }: Props) {
     return (
         <View style={Base.base}>
             {isLoggedIn ?

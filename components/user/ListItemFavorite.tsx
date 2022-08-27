@@ -4,11 +4,18 @@ import { Typography, Base, Buttons } from "../../styles";
 import { Ionicons } from '@expo/vector-icons';
 
 import SwipeableRow from "./SwipableRow";
+import FavoriteInterface from "../../interfaces/favorite";
 
+interface Props {
+    navigation: any,
+    data: FavoriteInterface,
+    removeFavorite: Function
+}
 
-export default function ListItemFavorite({ navigation, data, removeFavorite }) {
+export default function ListItemFavorite({ navigation, data, removeFavorite }: Props) {
 
-    const station = JSON.parse(data.artefact);
+    // const station = JSON.parse(data.artefact);
+    const station = data.artefact;
 
     return (
         <SwipeableRow action={removeFavorite} id={data.id} styling={Base.swipeRemove} text="Ta bort">

@@ -7,9 +7,20 @@ import DelayToggle from "./DelayToggle";
 import { Base, Typography } from "../../styles";
 import DelayMapAll from "./DelayMapAll";
 import StationInfo from "../../interfaces/stationInfo";
+import DelayInterface from "../../interfaces/delay";
 
+interface Props {
+    navigation: any,
+    delays: DelayInterface[],
+    stationInfo: {
+        [key: string]: StationInfo
+    },
+    setStationInfo: Function,
+    setDelays: Function,
+    station?: string
+}
 
-export default function DelayList({ navigation, delays, stationInfo, setStationInfo, setDelays, station = "" }) {
+export default function DelayList({ navigation, delays, stationInfo, setStationInfo, setDelays, station = "" }: Props) {
 
     const [showMap, setShowMap] = useState(false);
 
@@ -45,7 +56,7 @@ export default function DelayList({ navigation, delays, stationInfo, setStationI
         )
     }
 
-    const Item = ({ delay }) => {
+    const Item = ({ delay }: { delay: DelayInterface }) => {
         const key = delays.indexOf(delay);
         const signature = delay.ToLocation[0].LocationName;
         return <TouchableOpacity
@@ -69,7 +80,7 @@ export default function DelayList({ navigation, delays, stationInfo, setStationI
         </TouchableOpacity>
     }
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({ item }: { item: DelayInterface }) => (
         <Item delay={item} />
     );
 

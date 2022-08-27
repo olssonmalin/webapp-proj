@@ -1,16 +1,18 @@
 import config from "../config/config.json";
+import DelayInterface from "../interfaces/delay";
+import MessageInterface from "../interfaces/message";
+import StationInterface from "../interfaces/station";
 
 const messages = {
 
-    getMessages: async function getMessages() {
+    getMessages: async function getMessages(): Promise<MessageInterface> {
         const response = await fetch(`${config.base_url}messages`);
         const result = await response.json();
 
-        // console.log(result.data);
         return result.data;
     },
 
-    findMessagesDelay: async function findMessagesDelay(toLocation, fromLocation) {
+    findMessagesDelay: async function findMessagesDelay(toLocation: Partial<DelayInterface>, fromLocation: Partial<DelayInterface>): Promise<Partial<MessageInterface>> {
         const allMessages = await this.getMessages();
 
         function includesRoute(impact) {
@@ -25,11 +27,11 @@ const messages = {
         }
 
 
-        const result = allMessages.filter(message => message.TrafficImpact.filter(includesRoute).length > 0);
+        const result = allMessages.filter((message: MessageInterface) => message.TrafficImpact.filter(includesRoute).length > 0);
         return result;
     },
 
-    findMessagesStation: async function findMessagesStation(station) {
+    findMessagesStation: async function findMessagesStation(station: string): Promise<MessageInterface[]> {
         const allMessages = await this.getMessages();
 
         function includesStation(impact) {
@@ -40,7 +42,7 @@ const messages = {
             return false;
         }
 
-        const result = allMessages.filter(message => message.TrafficImpact !== undefined && message.TrafficImpact.filter(includesStation).length > 0);
+        const result = allMessages.filter((message: MessageInterface) => message.TrafficImpact !== undefined && message.TrafficImpact.filter(includesStation).length > 0);
         return result;
     }
 }

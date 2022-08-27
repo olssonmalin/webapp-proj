@@ -2,12 +2,21 @@ import { Text, View } from "react-native";
 import delayModel from "../../models/delays";
 import DelayMap from "./DelayMap";
 import { Base, Typography } from "../../styles";
+import StationInfo from "../../interfaces/stationInfo";
+import DelayInterface from "../../interfaces/delay";
 
-export default function DelayDetails({ route, stationInfo }) {
+interface Props {
+    route: any,
+    stationInfo: {
+        [key: string]: StationInfo
+    }
+}
 
-    const { delay } = route.params;
+export default function DelayDetails({ route, stationInfo }: Props) {
 
-    function getTimeDiffMeters(plannedTime, newTime) {
+    const { delay }: { delay: DelayInterface } = route.params;
+
+    function getTimeDiffMeters(plannedTime: string, newTime: string) {
         const plannedTimeObject = new Date(plannedTime);
         const newTimeObject = new Date(newTime);
         let diffMs = (newTimeObject.getTime() - plannedTimeObject.getTime());

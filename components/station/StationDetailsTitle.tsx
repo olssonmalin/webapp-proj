@@ -4,15 +4,24 @@ import { Typography, Base } from "../../styles"
 import { Ionicons } from '@expo/vector-icons';
 import userModel from "../../models/user";
 import stationModel from "../../models/stations";
+import StationInterface from "../../interfaces/station";
+import FavoriteInterface from "../../interfaces/favorite";
 
+interface Props {
+    isLoggedIn: boolean,
+    route: any,
+    favorites: FavoriteInterface[],
+    setFavorites: Function,
+    setStations: Function
+}
 
-export default function StationDetailsTitle({ isLoggedIn, route, favorites, setFavorites, setStations }) {
+export default function StationDetailsTitle({ isLoggedIn, route, favorites, setFavorites, setStations }: Props) {
 
     const title = route.params.name;
     const station = route.params.station;
     function isFavorite() {
         for (const favorite of favorites) {
-            const favoriteStation = JSON.parse(favorite.artefact);
+            const favoriteStation = favorite.artefact;
             if (favoriteStation.LocationSignature === station.LocationSignature) {
                 return favorite.id;
             }
@@ -24,17 +33,17 @@ export default function StationDetailsTitle({ isLoggedIn, route, favorites, setF
         const responseFavorites = await userModel.getData();
         setFavorites(responseFavorites);
         const responseStations = await stationModel.getStations();
-        const favoriteStations = responseFavorites.map(data => JSON.parse(data.artefact));
+        const favoriteStations = responseFavorites.map(data => data.artefact);
         const diff = userModel.filterFavorites(responseStations, favoriteStations);
         setStations(diff);
     }
 
-    async function addToFavorite(station) {
+    async function addToFavorite(station: StationInterface) {
         await userModel.addData(station);
         fetchDataLoggedIn();
     }
 
-    async function removeFavorite(id) {
+    async function removeFavorite(id: number) {
         await userModel.removeData(id);
         fetchDataLoggedIn();
     }

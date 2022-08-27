@@ -5,12 +5,22 @@ import * as Location from 'expo-location';
 import delayModel from "../../models/delays";
 import { useRef, useState, useEffect } from "react";
 import { Base, Buttons, Typography } from "../../styles";
+import StationInfo from "../../interfaces/stationInfo";
+import DelayInterface from "../../interfaces/delay";
 
-export default function DelayMapAll({ navigation, stationInfo, delays }) {
+interface Props {
+    navigation: any,
+    stationInfo: {
+        [key: string]: StationInfo
+    },
+    delays: DelayInterface[]
+}
+
+export default function DelayMapAll({ navigation, stationInfo, delays }: Props) {
 
     const mapRef = useRef(null);
     const [locationMarker, setLocationMarker] = useState(null);
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         (async () => {

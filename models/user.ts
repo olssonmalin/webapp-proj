@@ -1,5 +1,6 @@
 import storage from "./storage"
 import config from "../config/config.json";
+import StationInterface from "../interfaces/station";
 const user = {
     getData: async () => {
         try {
@@ -12,14 +13,23 @@ const user = {
             });
 
             const result = await response.json();
-            // const data = result.data.map(obj => JSON.parse(obj.artefact))
-            return result.data;
+            let data = [];
+            for (const station of result.data) {
+                data.push(
+                    {
+                        id: station.id,
+                        email: station.email,
+                        artefact: JSON.parse(station.artefact)
+                    }
+                )
+            }
+            return data;
         } catch (e) {
             // error reading value
         }
     },
 
-    addData: async (artefact) => {
+    addData: async (artefact: StationInterface) => {
         try {
             const token = await storage.readToken();
             const data = {
@@ -41,7 +51,7 @@ const user = {
         }
     },
 
-    removeData: async (id) => {
+    removeData: async (id: number) => {
         try {
             const token = await storage.readToken();
             const data = {
@@ -63,7 +73,7 @@ const user = {
         }
     },
 
-    filterFavorites: function (stations, favorites) {
+    filterFavorites: function (stations: StationInterface[], favorites: StationInterface[]) {
         return stations.filter(object1 => {
             return !favorites.some(object2 => {
                 return object1.LocationSignature === object2.LocationSignature;

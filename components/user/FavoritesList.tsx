@@ -4,9 +4,16 @@ import userModel from "../../models/user";
 import stationModel from "../../models/stations";
 import { useEffect } from "react";
 import ListItemFavorite from "./ListItemFavorite";
+import FavoriteInterface from "../../interfaces/favorite";
 
+interface Props {
+    navigation: any,
+    favorites: FavoriteInterface[],
+    setFavorites: Function,
+    setStations: Function
+}
 
-export default function FavoritesList({ navigation, favorites, setFavorites, setStations }) {
+export default function FavoritesList({ navigation, favorites, setFavorites, setStations }: Props) {
 
     async function fetchData() {
 
@@ -14,12 +21,12 @@ export default function FavoritesList({ navigation, favorites, setFavorites, set
         setFavorites(responseFavorites);
         const responseStations = await stationModel.getStations();
 
-        const favoriteStations = responseFavorites.map(data => JSON.parse(data.artefact));
-        const diff = userModel.filterFavorites(responseStations, favoriteStations);
+        const diff = userModel.filterFavorites(responseStations, responseFavorites);
+
         setStations(diff);
     }
 
-    async function removeFavorite(id) {
+    async function removeFavorite(id: number) {
         await userModel.removeData(id);
         fetchData();
     }
